@@ -140,22 +140,6 @@ The system provides:
 
 ---
 
-## 📸 Demo
-
-### Image Detection
-
-(Add Screenshot Here)
-
-### Video Detection
-
-(Add Screenshot Here)
-
-### Webcam Detection
-
-(Add Screenshot Here)
-
----
-
 ## 🔮 Future Improvements
 
 - Object Tracking
