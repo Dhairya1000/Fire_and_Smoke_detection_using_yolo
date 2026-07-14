@@ -129,7 +129,8 @@ When fire is detected, the system automatically:
 
 ### Detection
 
-<img width="346" height="252" alt="image" src="https://github.com/user-attachments/assets/b6c54c12-b1ff-410e-9c25-43ebe4528424" />
+<img width="418" height="480" alt="image" src="https://github.com/user-attachments/assets/8fb292eb-a36d-4bbb-9a98-391139fd4b9d" />
+
 
 
 ---
