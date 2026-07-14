@@ -7,6 +7,13 @@ import csv
 from datetime import datetime
 import threading
 import os 
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+ALERT_FOLDER = "alerts" 
+os.makedirs(ALERT_FOLDER, exist_ok=True)
 
 speech_lock = threading.Lock()
 
@@ -18,6 +25,31 @@ def speak(message):
 engine = pyttsx3.init()
 
 engine.setProperty("rate", 170)   # Speaking speed
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+
+def send_telegram_alert(message, frame):
+
+    image_path = os.path.join(ALERT_FOLDER,f"fire_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg")
+
+    # Save current frame
+    cv2.imwrite(image_path, frame)
+
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendPhoto"
+
+    with open(image_path, "rb") as photo:
+
+        requests.post(
+            url,
+            data={
+                "chat_id": CHAT_ID,
+                "caption": message
+            },
+            files={
+                "photo": photo
+            }
+        )
 
 last_fire_alert = 0
 last_smoke_alert = 0
@@ -133,7 +165,7 @@ else:
                 fire_frames = 0
                 no_fire_frames += 1
 
-            if fire_frames >= 10 and not alarm_playing:
+            if fire_frames >= 6 and not alarm_playing:
                     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     if os.path.exists('result.csv'):
                         data = [now,'Fire',round(max_fire_confidence,2)]
@@ -142,6 +174,23 @@ else:
                             writer.writerow(data)
                     pygame.mixer.music.play(-1)
                     alarm_playing = True
+
+                    message = f"""
+🚨 FIRE ALERT 🚨
+
+📅 Time: {now}
+🎯 Confidence: {max_fire_confidence:.2f}
+🔥 Fire Count: {fire_count}
+
+Please inspect the area immediately.
+"""
+                    
+                    threading.Thread(
+                        target=send_telegram_alert,
+                        args=(message, frame.copy()),
+                        daemon=True
+                    ).start()
+                    
                 
             if alarm_playing:
                 cv2.rectangle(frame, (0, frame.shape[0]-50), (frame.shape[1],frame.shape[0]), (0, 0, 255), -1)
