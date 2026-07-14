@@ -1,22 +1,23 @@
-# 🔥 Fire & Smoke Detection using YOLOv8
+# 🔥 AI Fire & Smoke Surveillance System using YOLOv8
 
-A real-time **Fire & Smoke Detection System** built using **YOLOv8**, **OpenCV**, and **Python**. The model can detect fire and smoke in images, videos, and live webcam streams while displaying bounding boxes, confidence scores, and object counts.
+A real-time Fire and Smoke Detection System built using **YOLOv8**, **OpenCV**, and **Python**. The application detects fire and smoke from webcam or video streams, generates instant voice and alarm alerts, logs detection events, and sends Telegram notifications with captured screenshots.
 
 ---
 
 ## 🚀 Features
 
-- 🔥 Fire Detection
+- 🔥 Real-time Fire Detection
 - 💨 Smoke Detection
-- 🖼️ Image Detection
-- 🎥 Video Detection
-- 📷 Live Webcam Detection
-- 📦 Bounding Boxes
-- 📊 Confidence Scores
-- 🔢 Fire & Smoke Count
-- 💾 Save Annotated Images
-- 💾 Save Annotated Videos
-- ⚡ Real-time Inference
+- 🎥 Webcam & Video Support
+- 📦 YOLOv8 Object Detection
+- 📢 Voice Alert using pyttsx3
+- 🚨 Alarm Sound using Pygame
+- 📱 Telegram Alert with Screenshot
+- 📸 Automatic Screenshot Capture
+- 📝 CSV Event Logging
+- 📊 Real-time FPS Display
+- 🎯 Confidence Score Display
+- 🖥️ Bounding Box Visualization
 
 ---
 
@@ -26,7 +27,10 @@ A real-time **Fire & Smoke Detection System** built using **YOLOv8**, **OpenCV**
 - YOLOv8 (Ultralytics)
 - OpenCV
 - PyTorch
-- NumPy
+- Pygame
+- pyttsx3
+- Telegram Bot API
+- Requests
 
 ---
 
@@ -35,43 +39,54 @@ A real-time **Fire & Smoke Detection System** built using **YOLOv8**, **OpenCV**
 ```
 Fire-Smoke-Detection/
 │
-├── detect_image.py
-├── detect_video.py
-├── detect_webcam.py
 ├── best.pt
+├── detect.py
 ├── requirements.txt
+├── alarm_sound.mp3
+├── result.csv
+├── .env.example
 ├── README.md
 │
-├── images/
-│   └── input_image.png
+├── alerts/
+│   ├── fire_20260714_101523.jpg
+│   └── fire_20260714_111021.jpg
 │
-├── videos/
-│   └── input_video.mp4
-│
-├── outputs/
-│   ├── output.jpg
-│   └── output_video.mp4
-│
-└── assets/
+└── screenshots/
 ```
 
 ---
 
-## 📦 Installation
+## ⚙️ Installation
 
-Clone the repository:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/Fire-Smoke-Detection.git
-```
-
-Move into the project directory:
+Clone the repository
 
 ```bash
-cd Fire-Smoke-Detection
+git clone https://github.com/YOUR_USERNAME/fire-smoke-detection.git
+
+cd fire-smoke-detection
 ```
 
-Install the required packages:
+Create virtual environment
+
+```bash
+python -m venv venv
+```
+
+Activate
+
+Windows
+
+```bash
+venv\Scripts\activate
+```
+
+Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -79,81 +94,69 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Usage
+## 🔐 Environment Variables
 
-### Image Detection
+Create a `.env` file
+
+```
+BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
+CHAT_ID=YOUR_CHAT_ID
+```
+
+Never upload your real `.env` file.
+
+---
+
+## ▶️ Run
 
 ```bash
-python detect_image.py
+python detect.py
 ```
 
 ---
 
-### Video Detection
+## 📱 Telegram Alert
 
-```bash
-python detect_video.py
-```
+When fire is detected, the system automatically:
 
----
-
-### Webcam Detection
-
-```bash
-python detect_webcam.py
-```
+- Sends an alert message
+- Captures the detection frame
+- Sends the screenshot to Telegram
 
 ---
 
-## 📊 Model Information
+## 📸 Screenshots
 
-- Model: YOLOv8 Nano
-- Framework: Ultralytics YOLOv8
-- Classes:
-  - Fire
-  - Smoke
+### Detection
 
----
+<img width="346" height="252" alt="image" src="https://github.com/user-attachments/assets/b6c54c12-b1ff-410e-9c25-43ebe4528424" />
 
-## 📈 Training Performance
-
-| Metric | Score |
-|--------|------:|
-| Precision | 94.7% |
-| Recall | 93.8% |
-| mAP@50 | 97.5% |
-| mAP@50-95 | 62.4% |
 
 ---
 
-## ✨ Outputs
+### Telegram Alert
 
-The system provides:
-
-- Bounding boxes around detected objects
-- Confidence score for each detection
-- Fire count
-- Smoke count
-- Saved output images
-- Saved output videos
-- Live webcam detection
+<img width="285" height="136" alt="image" src="https://github.com/user-attachments/assets/fa50941a-c09a-434f-8f84-4e7a14f46190" />
 
 ---
 
-## 🔮 Future Improvements
+## 📌 Future Improvements
 
-- Object Tracking
-- Fire Alarm System
-- Email/SMS Alerts
-- Streamlit Web Application
-- Flask API Deployment
-- Edge Device Deployment
+- FastAPI Inference API
+- Docker Support
+- Image Upload Interface
+- Video Upload Interface
+- Multi-camera Detection
+- Email Notifications
+- Cloud Deployment
 
 ---
 
 ## 👨‍💻 Author
 
-**Dhairya Nagpal**
+**Dhairya**
+
+B.Tech Computer Science (AI & ML)
 
 - LinkedIn: https://www.linkedin.com/in/dhairya-nagpal7
 - GitHub: https://github.com/Dhairya1000
